@@ -1,0 +1,9 @@
+data/
+runtime/
+deployment_assets/
+.env
+.git/
+.venv/
+__pycache__/
+*.pyc
+assignment_docs/

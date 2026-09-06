@@ -1,0 +1,213 @@
+{
+  "total_rows": 307511,
+  "columns": 122,
+  "development_rows": 261384,
+  "target_count": 21101,
+  "target_rate": 0.08072797110764239,
+  "duplicate_ids": 0,
+  "numeric_columns": 106,
+  "categorical_columns": 16,
+  "employment_sentinel_count": 46882,
+  "missing": {
+    "COMMONAREA_AVG": 0.6982523796406819,
+    "COMMONAREA_MODE": 0.6982523796406819,
+    "COMMONAREA_MEDI": 0.6982523796406819,
+    "NONLIVINGAPARTMENTS_AVG": 0.6939062834756526,
+    "NONLIVINGAPARTMENTS_MODE": 0.6939062834756526,
+    "NONLIVINGAPARTMENTS_MEDI": 0.6939062834756526,
+    "FONDKAPREMONT_MODE": 0.683507789306155,
+    "LIVINGAPARTMENTS_MEDI": 0.6832285067180852,
+    "LIVINGAPARTMENTS_AVG": 0.6832285067180852,
+    "LIVINGAPARTMENTS_MODE": 0.6832285067180852,
+    "FLOORSMIN_MODE": 0.6782511553882411,
+    "FLOORSMIN_AVG": 0.6782511553882411,
+    "FLOORSMIN_MEDI": 0.6782511553882411,
+    "YEARS_BUILD_AVG": 0.6645777859394607,
+    "YEARS_BUILD_MODE": 0.6645777859394607,
+    "YEARS_BUILD_MEDI": 0.6645777859394607,
+    "OWN_CAR_AGE": 0.6605645334067884,
+    "LANDAREA_MEDI": 0.5933224680929208,
+    "LANDAREA_AVG": 0.5933224680929208,
+    "LANDAREA_MODE": 0.5933224680929208
+  },
+  "target_definition": "Payment difficulties: late payment beyond an unspecified X days in the first Y installments. This is not a universal legal default definition.",
+  "source": "https://www.kaggle.com/competitions/home-credit-default-risk/data",
+  "groups": {
+    "NAME_INCOME_TYPE": [
+      {
+        "group": "Working",
+        "count": 134939,
+        "positives": 12881,
+        "rate": 0.09545794766524134
+      },
+      {
+        "group": "Commercial associate",
+        "count": 60993,
+        "positives": 4626,
+        "rate": 0.0758447690718607
+      },
+      {
+        "group": "State servant",
+        "count": 18535,
+        "positives": 1073,
+        "rate": 0.057890477475047206
+      },
+      {
+        "group": "Pensioner",
+        "count": 46872,
+        "positives": 2515,
+        "rate": 0.053656767366444785
+      }
+    ],
+    "NAME_EDUCATION_TYPE": [
+      {
+        "group": "Lower secondary",
+        "count": 3225,
+        "positives": 350,
+        "rate": 0.10852713178294573
+      },
+      {
+        "group": "Secondary / secondary special",
+        "count": 185640,
+        "positives": 16566,
+        "rate": 0.08923723335488042
+      },
+      {
+        "group": "Incomplete higher",
+        "count": 8802,
+        "positives": 753,
+        "rate": 0.08554873892297205
+      },
+      {
+        "group": "Higher education",
+        "count": 63584,
+        "positives": 3430,
+        "rate": 0.0539443885254152
+      }
+    ],
+    "NAME_HOUSING_TYPE": [
+      {
+        "group": "Rented apartment",
+        "count": 4136,
+        "positives": 503,
+        "rate": 0.12161508704061895
+      },
+      {
+        "group": "With parents",
+        "count": 12625,
+        "positives": 1480,
+        "rate": 0.11722772277227722
+      },
+      {
+        "group": "Co-op apartment",
+        "count": 935,
+        "positives": 79,
+        "rate": 0.08449197860962566
+      },
+      {
+        "group": "Municipal apartment",
+        "count": 9474,
+        "positives": 800,
+        "rate": 0.08444162972345366
+      },
+      {
+        "group": "House / apartment",
+        "count": 231987,
+        "positives": 18091,
+        "rate": 0.0779828180027329
+      },
+      {
+        "group": "Office apartment",
+        "count": 2227,
+        "positives": 148,
+        "rate": 0.06645711719802425
+      }
+    ],
+    "NAME_CONTRACT_TYPE": [
+      {
+        "group": "Cash loans",
+        "count": 236480,
+        "positives": 19731,
+        "rate": 0.08343623139377537
+      },
+      {
+        "group": "Revolving loans",
+        "count": 24904,
+        "positives": 1370,
+        "rate": 0.05501124317378734
+      }
+    ],
+    "AGE_GROUP": [
+      {
+        "group": "[0, 30)",
+        "count": 38621,
+        "positives": 4410,
+        "rate": 0.11418658242924834
+      },
+      {
+        "group": "[30, 40)",
+        "count": 69927,
+        "positives": 6722,
+        "rate": 0.09612882005520042
+      },
+      {
+        "group": "[40, 50)",
+        "count": 65121,
+        "positives": 4988,
+        "rate": 0.07659587537046421
+      },
+      {
+        "group": "[50, 60)",
+        "count": 57854,
+        "positives": 3525,
+        "rate": 0.06092923566218412
+      },
+      {
+        "group": "[60, 100)",
+        "count": 29861,
+        "positives": 1456,
+        "rate": 0.048759251197213756
+      }
+    ],
+    "CREDIT_INCOME_GROUP": [
+      {
+        "group": "[3, 5)",
+        "count": 73236,
+        "positives": 6408,
+        "rate": 0.08749795182697034
+      },
+      {
+        "group": "[2, 3)",
+        "count": 56308,
+        "positives": 4924,
+        "rate": 0.08744760957590396
+      },
+      {
+        "group": "[1, 2)",
+        "count": 48308,
+        "positives": 3742,
+        "rate": 0.07746129005547735
+      },
+      {
+        "group": "[5, 1000)",
+        "count": 71416,
+        "positives": 5256,
+        "rate": 0.07359695306373921
+      },
+      {
+        "group": "[0, 1)",
+        "count": 12116,
+        "positives": 771,
+        "rate": 0.06363486299108617
+      }
+    ]
+  },
+  "insights": [
+    "NAME_INCOME_TYPE: Working has a 9.5% payment-difficulty rate (n=134,939), compared with 5.4% for Pensioner (n=46,872). Association, not causation.",
+    "NAME_EDUCATION_TYPE: Lower secondary has a 10.9% payment-difficulty rate (n=3,225), compared with 5.4% for Higher education (n=63,584). Association, not causation.",
+    "NAME_HOUSING_TYPE: Rented apartment has a 12.2% payment-difficulty rate (n=4,136), compared with 6.6% for Office apartment (n=2,227). Association, not causation.",
+    "NAME_CONTRACT_TYPE: Cash loans has a 8.3% payment-difficulty rate (n=236,480), compared with 5.5% for Revolving loans (n=24,904). Association, not causation.",
+    "AGE_GROUP: [0, 30) has a 11.4% payment-difficulty rate (n=38,621), compared with 4.9% for [60, 100) (n=29,861). Association, not causation.",
+    "CREDIT_INCOME_GROUP: [3, 5) has a 8.7% payment-difficulty rate (n=73,236), compared with 6.4% for [0, 1) (n=12,116). Association, not causation."
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "text": "|--- EXT_SOURCE_MEAN <= 0.53\n|   |--- EXT_SOURCE_MEAN <= 0.34\n|   |   |--- AGE_YEARS <= 56.35\n|   |   |   |--- class: High\n|   |   |--- AGE_YEARS >  56.35\n|   |   |   |--- class: Medium\n|   |--- EXT_SOURCE_MEAN >  0.34\n|   |   |--- EXT_SOURCE_MEAN <= 0.46\n|   |   |   |--- class: Medium\n|   |   |--- EXT_SOURCE_MEAN >  0.46\n|   |   |   |--- class: Medium\n|--- EXT_SOURCE_MEAN >  0.53\n|   |--- EXT_SOURCE_MEAN <= 0.58\n|   |   |--- EMPLOYED_YEARS <= 4.50\n|   |   |   |--- class: Low\n|   |   |--- EMPLOYED_YEARS >  4.50\n|   |   |   |--- class: Low\n|   |--- EXT_SOURCE_MEAN >  0.58\n|   |   |--- EMPLOYED_YEARS <= 4.45\n|   |   |   |--- class: Low\n|   |   |--- EMPLOYED_YEARS >  4.45\n|   |   |   |--- class: Low\n",
+  "validation_agreement": 0.7472846705833893,
+  "note": "Approximation of model risk bands; not lending policy or causal rules."
+}

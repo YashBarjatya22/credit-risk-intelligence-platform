@@ -1,0 +1,14 @@
+numpy==2.3.5
+pandas==2.2.3
+scipy==1.17.0
+scikit-learn==1.8.0
+joblib==1.5.3
+streamlit==1.49.1
+shap==0.48.0
+sqlglot==27.12.0
+matplotlib==3.10.8
+python-dotenv==1.2.3
+altair==5.5.0
+cachetools>=5.5,<7
+packaging>=23,<26
+protobuf>=3.20,<7

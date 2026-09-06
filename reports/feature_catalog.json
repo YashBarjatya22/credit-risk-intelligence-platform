@@ -1,0 +1,612 @@
+{
+  "SK_ID_CURR": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "identifier"
+  },
+  "TARGET": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "target"
+  },
+  "NAME_CONTRACT_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "CODE_GENDER": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_OWN_CAR": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "FLAG_OWN_REALTY": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "CNT_CHILDREN": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "AMT_INCOME_TOTAL": {
+    "dtype": "float64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "AMT_CREDIT": {
+    "dtype": "float64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "AMT_ANNUITY": {
+    "dtype": "float64",
+    "missing_fraction": 3.825788877666575e-05,
+    "role": "model input"
+  },
+  "AMT_GOODS_PRICE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0009220151195176446,
+    "role": "model input"
+  },
+  "NAME_TYPE_SUITE": {
+    "dtype": "object",
+    "missing_fraction": 0.004189238821044899,
+    "role": "not used in this model"
+  },
+  "NAME_INCOME_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "NAME_EDUCATION_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "NAME_FAMILY_STATUS": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "NAME_HOUSING_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "REGION_POPULATION_RELATIVE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "DAYS_BIRTH": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "DAYS_EMPLOYED": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "DAYS_REGISTRATION": {
+    "dtype": "float64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "DAYS_ID_PUBLISH": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "OWN_CAR_AGE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6605645334067884,
+    "role": "not used in this model"
+  },
+  "FLAG_MOBIL": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_EMP_PHONE": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_WORK_PHONE": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_CONT_MOBILE": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_PHONE": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_EMAIL": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "OCCUPATION_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.31274293759373184,
+    "role": "model input"
+  },
+  "CNT_FAM_MEMBERS": {
+    "dtype": "float64",
+    "missing_fraction": 7.65157775533315e-06,
+    "role": "model input"
+  },
+  "REGION_RATING_CLIENT": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "REGION_RATING_CLIENT_W_CITY": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "WEEKDAY_APPR_PROCESS_START": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "HOUR_APPR_PROCESS_START": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "REG_REGION_NOT_LIVE_REGION": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "REG_REGION_NOT_WORK_REGION": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "LIVE_REGION_NOT_WORK_REGION": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "REG_CITY_NOT_LIVE_CITY": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "REG_CITY_NOT_WORK_CITY": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "LIVE_CITY_NOT_WORK_CITY": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "ORGANIZATION_TYPE": {
+    "dtype": "object",
+    "missing_fraction": 0.0,
+    "role": "model input"
+  },
+  "EXT_SOURCE_1": {
+    "dtype": "float64",
+    "missing_fraction": 0.5631790775257858,
+    "role": "model input"
+  },
+  "EXT_SOURCE_2": {
+    "dtype": "float64",
+    "missing_fraction": 0.0021424417714932817,
+    "role": "model input"
+  },
+  "EXT_SOURCE_3": {
+    "dtype": "float64",
+    "missing_fraction": 0.1986540874728369,
+    "role": "model input"
+  },
+  "APARTMENTS_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5070624062681724,
+    "role": "not used in this model"
+  },
+  "BASEMENTAREA_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5844313347412237,
+    "role": "not used in this model"
+  },
+  "YEARS_BEGINEXPLUATATION_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.4874973219477856,
+    "role": "not used in this model"
+  },
+  "YEARS_BUILD_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.6645777859394607,
+    "role": "not used in this model"
+  },
+  "COMMONAREA_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.6982523796406819,
+    "role": "not used in this model"
+  },
+  "ELEVATORS_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5323738254828145,
+    "role": "not used in this model"
+  },
+  "ENTRANCES_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5031180179352983,
+    "role": "not used in this model"
+  },
+  "FLOORSMAX_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.49711152939736175,
+    "role": "not used in this model"
+  },
+  "FLOORSMIN_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.6782511553882411,
+    "role": "not used in this model"
+  },
+  "LANDAREA_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5933224680929208,
+    "role": "not used in this model"
+  },
+  "LIVINGAPARTMENTS_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.6832285067180852,
+    "role": "not used in this model"
+  },
+  "LIVINGAREA_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.501790469194748,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAPARTMENTS_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.6939062834756526,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAREA_AVG": {
+    "dtype": "float64",
+    "missing_fraction": 0.5510857588834818,
+    "role": "not used in this model"
+  },
+  "APARTMENTS_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5070624062681724,
+    "role": "not used in this model"
+  },
+  "BASEMENTAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5844313347412237,
+    "role": "not used in this model"
+  },
+  "YEARS_BEGINEXPLUATATION_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.4874973219477856,
+    "role": "not used in this model"
+  },
+  "YEARS_BUILD_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6645777859394607,
+    "role": "not used in this model"
+  },
+  "COMMONAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6982523796406819,
+    "role": "not used in this model"
+  },
+  "ELEVATORS_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5323738254828145,
+    "role": "not used in this model"
+  },
+  "ENTRANCES_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5031180179352983,
+    "role": "not used in this model"
+  },
+  "FLOORSMAX_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.49711152939736175,
+    "role": "not used in this model"
+  },
+  "FLOORSMIN_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6782511553882411,
+    "role": "not used in this model"
+  },
+  "LANDAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5933224680929208,
+    "role": "not used in this model"
+  },
+  "LIVINGAPARTMENTS_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6832285067180852,
+    "role": "not used in this model"
+  },
+  "LIVINGAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.501790469194748,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAPARTMENTS_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.6939062834756526,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.5510857588834818,
+    "role": "not used in this model"
+  },
+  "APARTMENTS_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5070624062681724,
+    "role": "not used in this model"
+  },
+  "BASEMENTAREA_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5844313347412237,
+    "role": "not used in this model"
+  },
+  "YEARS_BEGINEXPLUATATION_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.4874973219477856,
+    "role": "not used in this model"
+  },
+  "YEARS_BUILD_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.6645777859394607,
+    "role": "not used in this model"
+  },
+  "COMMONAREA_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.6982523796406819,
+    "role": "not used in this model"
+  },
+  "ELEVATORS_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5323738254828145,
+    "role": "not used in this model"
+  },
+  "ENTRANCES_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5031180179352983,
+    "role": "not used in this model"
+  },
+  "FLOORSMAX_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.49711152939736175,
+    "role": "not used in this model"
+  },
+  "FLOORSMIN_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.6782511553882411,
+    "role": "not used in this model"
+  },
+  "LANDAREA_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5933224680929208,
+    "role": "not used in this model"
+  },
+  "LIVINGAPARTMENTS_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.6832285067180852,
+    "role": "not used in this model"
+  },
+  "LIVINGAREA_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.501790469194748,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAPARTMENTS_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.6939062834756526,
+    "role": "not used in this model"
+  },
+  "NONLIVINGAREA_MEDI": {
+    "dtype": "float64",
+    "missing_fraction": 0.5510857588834818,
+    "role": "not used in this model"
+  },
+  "FONDKAPREMONT_MODE": {
+    "dtype": "object",
+    "missing_fraction": 0.683507789306155,
+    "role": "not used in this model"
+  },
+  "HOUSETYPE_MODE": {
+    "dtype": "object",
+    "missing_fraction": 0.5012701619073853,
+    "role": "not used in this model"
+  },
+  "TOTALAREA_MODE": {
+    "dtype": "float64",
+    "missing_fraction": 0.4824319774737551,
+    "role": "not used in this model"
+  },
+  "WALLSMATERIAL_MODE": {
+    "dtype": "object",
+    "missing_fraction": 0.5079499892877911,
+    "role": "not used in this model"
+  },
+  "EMERGENCYSTATE_MODE": {
+    "dtype": "object",
+    "missing_fraction": 0.4738239524990053,
+    "role": "not used in this model"
+  },
+  "OBS_30_CNT_SOCIAL_CIRCLE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0033437394790805865,
+    "role": "model input"
+  },
+  "DEF_30_CNT_SOCIAL_CIRCLE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0033437394790805865,
+    "role": "model input"
+  },
+  "OBS_60_CNT_SOCIAL_CIRCLE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0033437394790805865,
+    "role": "model input"
+  },
+  "DEF_60_CNT_SOCIAL_CIRCLE": {
+    "dtype": "float64",
+    "missing_fraction": 0.0033437394790805865,
+    "role": "model input"
+  },
+  "DAYS_LAST_PHONE_CHANGE": {
+    "dtype": "float64",
+    "missing_fraction": 3.825788877666575e-06,
+    "role": "model input"
+  },
+  "FLAG_DOCUMENT_2": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_3": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_4": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_5": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_6": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_7": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_8": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_9": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_10": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_11": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_12": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_13": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_14": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_15": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_16": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_17": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_18": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_19": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_20": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "FLAG_DOCUMENT_21": {
+    "dtype": "int64",
+    "missing_fraction": 0.0,
+    "role": "not used in this model"
+  },
+  "AMT_REQ_CREDIT_BUREAU_HOUR": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "not used in this model"
+  },
+  "AMT_REQ_CREDIT_BUREAU_DAY": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "not used in this model"
+  },
+  "AMT_REQ_CREDIT_BUREAU_WEEK": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "not used in this model"
+  },
+  "AMT_REQ_CREDIT_BUREAU_MON": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "not used in this model"
+  },
+  "AMT_REQ_CREDIT_BUREAU_QRT": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "model input"
+  },
+  "AMT_REQ_CREDIT_BUREAU_YEAR": {
+    "dtype": "float64",
+    "missing_fraction": 0.13528754629204542,
+    "role": "model input"
+  }
+}

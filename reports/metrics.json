@@ -1,0 +1,139 @@
+{
+  "split_counts": {
+    "train": 169130,
+    "calibration": 46127,
+    "validation": 46127,
+    "test": 46127
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "baseline_validation": {
+    "roc_auc": 0.747535454657238,
+    "pr_auc_average_precision": 0.22743499793997762,
+    "precision": 0.16043156281920326,
+    "recall": 0.6749932849852269,
+    "f1": 0.2592458864187342,
+    "f2": 0.41121220054981017,
+    "brier": 0.2023881013945661,
+    "threshold": 0.5,
+    "confusion_matrix": [
+      [
+        29253,
+        13151
+      ],
+      [
+        1210,
+        2513
+      ]
+    ],
+    "n": 46127
+  },
+  "candidates_validation": [
+    {
+      "class_weight": null,
+      "metrics": {
+        "roc_auc": 0.7586715474898185,
+        "pr_auc_average_precision": 0.23979038739473507,
+        "precision": 0.18708952644313862,
+        "recall": 0.5815202793446146,
+        "f1": 0.2830990519777705,
+        "f2": 0.4090462515114873,
+        "brier": 0.06786783672063211,
+        "threshold": 0.1,
+        "confusion_matrix": [
+          [
+            32997,
+            9407
+          ],
+          [
+            1558,
+            2165
+          ]
+        ],
+        "n": 46127
+      }
+    },
+    {
+      "class_weight": "balanced",
+      "metrics": {
+        "roc_auc": 0.7583343208541363,
+        "pr_auc_average_precision": 0.24196416182828906,
+        "precision": 0.18307230382212122,
+        "recall": 0.6059629331184528,
+        "f1": 0.2811915742241057,
+        "f2": 0.4144773103068161,
+        "brier": 0.06789816032484773,
+        "threshold": 0.1,
+        "confusion_matrix": [
+          [
+            32337,
+            10067
+          ],
+          [
+            1467,
+            2256
+          ]
+        ],
+        "n": 46127
+      }
+    }
+  ],
+  "selected_class_weight": "balanced",
+  "validation": {
+    "roc_auc": 0.7583343208541363,
+    "pr_auc_average_precision": 0.24196416182828906,
+    "precision": 0.16333926754832145,
+    "recall": 0.6900349180768197,
+    "f1": 0.2641509433962264,
+    "f2": 0.41949706074461135,
+    "brier": 0.06789816032484773,
+    "threshold": 0.08,
+    "confusion_matrix": [
+      [
+        29245,
+        13159
+      ],
+      [
+        1154,
+        2569
+      ]
+    ],
+    "n": 46127
+  },
+  "test": {
+    "roc_auc": 0.761562118917624,
+    "pr_auc_average_precision": 0.24382523130772982,
+    "precision": 0.1650356714439043,
+    "recall": 0.7019334049409237,
+    "f1": 0.26723917599550173,
+    "f2": 0.4252480884984545,
+    "brier": 0.06777016458680228,
+    "threshold": 0.08,
+    "confusion_matrix": [
+      [
+        29178,
+        13225
+      ],
+      [
+        1110,
+        2614
+      ]
+    ],
+    "n": 46127
+  },
+  "test_uncalibrated_brier": 0.19073229437360056,
+  "test_prevalence": 0.08073362672621241,
+  "risk_boundaries": [
+    0.05199438022706685,
+    0.15247015123313182
+  ],
+  "threshold_rationale": "Maximize F2 on validation; recall weighted more than precision. No business cost model supplied.",
+  "bands_rationale": "Validation probability quantiles: bottom 50% Low, next 35% Medium, top 15% High. Relative demo segments, not policy.",
+  "training_seconds": 36.15408754348755,
+  "python": "3.12.13",
+  "sklearn": "1.8.0",
+  "dataset_sha256": "52e96b895b1112e1c853f670e58372719c8441c5ed1c57ac2f7fad559d784f5f"
+}
