@@ -1,4 +1,4 @@
-data/
+/data/
 runtime/
 deployment_assets/
 .env
