@@ -151,3 +151,6 @@ The updated submission instruction requires a deployed project URL as well as Do
 - SQLite and in-process budgets suit a demonstration; production needs authenticated roles, centralized budgets, audit retention and operational monitoring.
 - Saved joblib files must come from trusted sources. Artifacts are tied to the recorded library versions.
 - Live LLM, real Docker startup and public hosting are explicit remaining verification gates.
+
+## Live Demo
+https://credit-risk-intelligence-platform-1.onrender.com
