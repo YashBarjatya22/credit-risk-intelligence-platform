@@ -1,4 +1,4 @@
-# CreditScope — Credit Risk Intelligence
+# CreditScope - Credit Risk Intelligence
 
 A NeoStats AI Engineer candidate project using Home Credit application data. The six-section Streamlit app connects exploratory analysis, calibrated repayment-difficulty predictions, local SHAP explanations, a compact rule surrogate, and an LLM-to-SQL interface.
 
