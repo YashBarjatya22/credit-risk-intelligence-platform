@@ -1,10 +1,7 @@
-# Deploying the actual project
 
-The employer requires a deployed URL. This package has no public deployment yet. Docker files are present; Docker startup must first be verified on the laptop.
 
 ## Host requirements
 
-Choose a host that supports a long-running Docker web service, outbound HTTPS for the model API, WebSockets for Streamlit, and writable runtime storage. Start with around 2 GB RAM as a practical trial allocation and watch actual usage; bootstrapping and SHAP may require tuning. A static website host will not execute this Python app.
 
 Build from the included Dockerfile. Route the host's public HTTPS service to port 8501, or set `PORT` to the port required by the host. Health endpoint: `/_stcore/health`. Startup may take longer than a normal static app because CSV conversion occurs first. The container runs as uid 10001; its runtime directory must remain writable.
 
