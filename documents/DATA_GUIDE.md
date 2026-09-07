@@ -1,6 +1,6 @@
 # Data coverage and business meaning
 
-Source: user-supplied Home Credit `application_train.csv` and `HomeCredit_columns_description.csv`; dictionary read with Latin-1 encoding.
+Source: Home Credit `application_train.csv` and its accompanying column description; the dictionary is read with Latin-1 encoding.
 
 | Category | Example columns | Interpretation / quality considerations |
 |---|---|---|

@@ -24,7 +24,7 @@ st.markdown('''<style>
 </style>''',unsafe_allow_html=True)
 password=os.getenv('APP_ACCESS_PASSWORD','')
 if password and not st.session_state.get('authenticated'):
-    st.title('CreditScope');st.write('Enter the access password provided with the demo.')
+    st.title('CreditScope');st.write('Enter the access password to open the application.')
     entered=st.text_input('Access password',type='password')
     if st.button('Open workspace'):
         if hmac.compare_digest(entered,password):st.session_state.authenticated=True;st.rerun()
@@ -40,9 +40,9 @@ b=bundle();m=report('metrics');eda=report('eda')
 with st.sidebar:
     st.title('◈ CreditScope');st.caption('CREDIT RISK INTELLIGENCE')
     page=st.radio('Workspace',['Overview','Explore data','Risk assessment','Model evidence','Decision rules','Talk to data'])
-    st.divider();st.caption('Home Credit · candidate demonstration')
-    st.caption('Yash Barjatya | NeoStats assignment')
-    st.caption('AI chat configured' if configured() else 'AI chat needs configuration')
+    st.divider();st.caption('Home Credit · application data')
+    st.caption('Developed by Yash Barjatya')
+    st.caption('Talk to Data ready' if configured() else 'Talk to Data needs configuration')
 st.markdown('<div class="eyebrow">Credit intelligence / '+page+'</div>',unsafe_allow_html=True)
 st.title(page)
 
@@ -71,14 +71,14 @@ elif page=='Explore data':
     chosen=st.selectbox('Compare applicant groups',list(eda['groups']),format_func=lambda s:s.replace('_',' ').title())
     g=pd.DataFrame(eda['groups'][chosen]);left,right=st.columns([1.3,1])
     with left:st.bar_chart(g.set_index('group')[['rate']],color='#147d92',horizontal=True)
-    with right:st.dataframe(g.rename(columns={'group':'Group','count':'Applicants','positives':'Difficulty cases','rate':'Difficulty rate'}),hide_index=True,use_container_width=True)
+    with right:st.dataframe(g.rename(columns={'group':'Group','count':'Applicants','positives':'Difficulty cases','rate':'Difficulty rate'}),hide_index=True,width='stretch')
     st.subheader('Six findings from the data')
     for i,insight in enumerate(eda['insights'],1):st.write(f'{i}. {insight}')
     with st.expander('Data quality and feature coverage'):
         st.write(f"{eda['columns']} source columns; {eda['numeric_columns']} numeric and {eda['categorical_columns']} categorical. Duplicate applicant IDs: {eda['duplicate_ids']}.")
         st.write(f"Employment sentinel 365243 occurs {eda['employment_sentinel_count']:,} times in development data; it becomes missing with an explicit indicator.")
         st.dataframe(pd.Series(eda['missing'],name='Missing fraction').to_frame())
-        st.dataframe(pd.DataFrame(report('feature_catalog')).T,use_container_width=True)
+        st.dataframe(pd.DataFrame(report('feature_catalog')).T,width='stretch')
     st.caption('Associations are not causal. Small groups are excluded from rate rankings; confounding and group fairness require further study.')
 
 elif page=='Risk assessment':
@@ -130,11 +130,11 @@ elif page=='Risk assessment':
 
 elif page=='Model evidence':
     st.write('Selection uses validation average precision. Calibration uses a separate split; final test metrics follow these choices.')
-    st.dataframe(pd.DataFrame(m['split_counts'],index=['Applicants']),use_container_width=True)
+    st.dataframe(pd.DataFrame(m['split_counts'],index=['Applicants']),width='stretch')
     scores=[]
     for label,mm in [('Logistic baseline · validation',m['baseline_validation']),('Selected model · validation',m['validation']),('Selected model · final test',m['test'])]:
         scores.append({'Evaluation':label,**{k:round(mm[k],4) for k in ['roc_auc','pr_auc_average_precision','precision','recall','f1','brier','threshold']}})
-    st.dataframe(pd.DataFrame(scores),hide_index=True,use_container_width=True)
+    st.dataframe(pd.DataFrame(scores),hide_index=True,width='stretch')
     c1,c2=st.columns(2);c1.image(str(ROOT/'reports/figures/ROC.png'));c2.image(str(ROOT/'reports/figures/Precision_Recall.png'))
     c1,c2=st.columns(2)
     c1.dataframe(pd.DataFrame(m['test']['confusion_matrix'],index=['Actual no difficulty','Actual difficulty'],columns=['Screen negative','Screen positive']))
@@ -159,13 +159,13 @@ elif page=='Talk to data':
     if not db.exists():st.warning('Mount the dataset and run bootstrap.py before database questions can execute.')
     st.session_state.setdefault('history',[])
     if st.button('Clear conversation'):st.session_state.history=[];st.rerun()
-    with st.expander('Five verified SQL examples (no AI call)'):
+    with st.expander('Five reference SQL examples (no provider call)'):
         example=st.selectbox('Example question',[p[0] for p in PATTERNS]);sql=dict(PATTERNS)[example];st.code(sql,language='sql')
         if st.button('Run example'):
             try:
                 result=execute_query(db,sql);st.write(grounded_answer(result));st.dataframe(pd.DataFrame(result['rows']),hide_index=True)
             except ValueError as exc:st.error(str(exc))
-    if not configured():st.info('Live AI chat is not configured. Add LLM_API_KEY and LLM_MODEL privately. Examples above are SQL demonstrations, not AI responses.')
+    if not configured():st.info('The chatbot provider is not configured. Add LLM_API_KEY and LLM_MODEL in the environment. The examples above run directly against SQL.')
     for turn in st.session_state.history:
         with st.chat_message('user'):st.write(turn['question'])
         with st.chat_message('assistant'):
@@ -184,4 +184,4 @@ elif page=='Talk to data':
                 st.session_state.history.append(answer);st.session_state.history=st.session_state.history[-10:];st.rerun()
             except ValueError as exc:st.error(str(exc))
     st.caption('Only schema, question and three prior question/SQL pairs go to the provider. Results are summarized locally, without sending applicant rows or inventing numerical conclusions.')
-st.divider();st.caption('Candidate demonstration · application data only · decision support, not loan approval.')
+st.divider();st.caption('Application data only · decision support, not loan approval.')

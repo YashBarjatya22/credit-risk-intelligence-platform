@@ -1,121 +1,148 @@
-# CreditScope - Credit Risk Intelligence
+# CreditScope — Credit Risk Intelligence
 
-A NeoStats AI Engineer candidate project using Home Credit application data. The six-section Streamlit app connects exploratory analysis, calibrated repayment-difficulty predictions, local SHAP explanations, a compact rule surrogate, and an LLM-to-SQL interface.
+CreditScope is my end-to-end credit-risk project for the NeoStats AI Engineer assignment, built with the Home Credit Default Risk dataset. It brings the complete workflow into one Streamlit application: data exploration, credit-risk prediction, local SHAP explanations, simplified decision rules, and a natural-language-to-SQL chatbot.
 
-**Status:** model trained; 13 automated tests passed; Docker Compose was verified healthy on the candidate's laptop; and a live Gemini-to-SQL question executed successfully with visible SQL, results and token usage. Public deployment remains required before submission. No deployed URL is claimed.
+The model is trained and saved, all 13 automated tests pass, and I verified the complete application locally with Docker Compose. I also tested the Gemini integration with a live question and confirmed that it produced SQL, executed it, and displayed the result with token usage.
 
-## Run with Docker Desktop
+**Live application:** https://credit-risk-intelligence-platform-1.onrender.com
 
-1. Extract the project and open its folder in a terminal. The folder must contain this README and `docker-compose.yml`.
-2. Obtain `application_train.csv` from the [Home Credit dataset](https://www.kaggle.com/competitions/home-credit-default-risk/data), respecting its access terms. Put it in `data/application_train.csv`. The exact file supplied for this build has SHA-256 `52e96b895b1112e1c853f670e58372719c8441c5ed1c57ac2f7fad559d784f5f`.
-3. Copy `.env.example` to `.env`. For live chat, privately fill `LLM_API_KEY`, `LLM_MODEL`, and, if needed, `LLM_BASE_URL`. Use a model supporting Chat Completions, JSON object output and `max_completion_tokens`. The default endpoint is OpenAI; provider API access is required separately. Never put a key in source control or screenshots.
-4. Start Docker Desktop, then run:
+> The raw dataset is intentionally excluded from Git. Features that use the analytics database, particularly Talk to Data, require the CSV to be mounted privately. The complete workflow was tested locally and is shown in the presentation screenshots.
+
+## Running the project with Docker
+
+1. Download or clone the project and open the folder containing this README and `docker-compose.yml`.
+2. Download `application_train.csv` from the [Home Credit competition page](https://www.kaggle.com/competitions/home-credit-default-risk/data) and place it at `data/application_train.csv`. The file used while developing this project has SHA-256 checksum `52e96b895b1112e1c853f670e58372719c8441c5ed1c57ac2f7fad559d784f5f`.
+3. Copy `.env.example` to `.env`. To enable the live chatbot, add `LLM_API_KEY`, `LLM_MODEL`, and `LLM_BASE_URL` where required. The selected provider must support Chat Completions, JSON-object output, and `max_completion_tokens`. API keys should never be committed or included in screenshots.
+4. Start Docker Desktop and run:
 
 ```sh
 docker compose up --build
 ```
 
-5. Open `http://localhost:8501`. First startup installs dependencies and converts the locally mounted CSV to SQLite. The trained model is already included; startup does not retrain it.
+5. Open `http://localhost:8501`.
 
-Use Docker Compose 2.24 or later (`docker compose version`), because the environment file is optional in the Compose specification used here. Stop with Ctrl+C, then `docker compose down`. If the dataset is absent, reports and manual prediction remain available, while data chat and held-out examples remain unavailable. If the API key is absent, SQL examples work after the dataset is mounted and remain explicitly labelled as non-AI demonstrations.
+During the first startup, the container installs the required packages and converts the mounted CSV into a local SQLite database. The trained model is already part of the project, so the application does not retrain it during startup.
 
-## Architecture
+Docker Compose 2.24 or newer is recommended because the Compose file uses an optional environment-file declaration. To stop the project, press `Ctrl+C` and run:
+
+```sh
+docker compose down
+```
+
+If the CSV is missing, the saved reports and manual prediction screen still work, but the chatbot and held-out applicant examples are unavailable. If the API key is missing, the five reference SQL examples can still be used after the dataset is mounted; these are clearly marked as direct SQL examples.
+
+## How the application is structured
 
 ```mermaid
 flowchart TD
   A[Application CSV] --> B[Training and EDA]
   B --> C[Saved model and reports]
-  C --> D[Streamlit workspace]
-  A --> E[Read-only analytics database]
-  D --> F[LLM generates SQL]
-  F --> G[SQL validation and limits]
-  G --> E
-  E --> D
+  C --> D[Streamlit application]
+  A --> E[Runtime bootstrap]
+  E --> F[Read-only SQLite database]
+  D --> G[LLM proposes SQL]
+  G --> H[SQL validation and limits]
+  H --> F
+  F --> D
 ```
 
-The LLM proposes queries; it never assigns credit scores. Inference uses the saved preprocessing, boosting and calibration objects. SQL is checked twice: a SQLGlot syntax/allowlist layer followed by SQLite read-only access, an authorizer, a timeout and output limits. A deterministic renderer summarizes the actual result rows, so no second LLM call can invent a numerical answer.
+The scoring model and chatbot are deliberately separate. The LLM only translates a business question into SQL; it does not calculate or assign an applicant's risk score. Predictions use the saved preprocessing, gradient-boosting, and calibration objects.
 
-## Project map
+Proposed SQL first passes through a SQLGlot parser and allowlist. SQLite then applies read-only access, an authorizer, a timeout, and a row limit. The result is summarized locally from the rows returned by SQLite. This avoids a second LLM call and prevents the model from inventing numerical conclusions.
 
-| Location | Purpose |
+## Project structure
+
+| Location | What it contains |
 |---|---|
-| `train.py` | Reproducible EDA, splits, baseline/candidates, calibration, rules, evaluation |
-| `src/data/preprocessor.py` | Deterministic features; input/target separation |
-| `src/ml/predict.py` | Probability, score, bands, input checks, permutation SHAP |
-| `src/talk_to_data/` | Prompt, bounded history, real API client, SQL validation/execution |
-| `bootstrap.py` | Private CSV → SQLite and held-out demonstration profiles |
-| `app.py` | Overview, Explore data, Risk assessment, Model evidence, Rules, Talk to data |
-| `models/` | Saved final model bundle and logistic baseline |
-| `reports/` | Machine-readable metrics, six EDA findings, quality catalog, figures, rules |
-| `notebooks/` | Reproducible analysis walkthrough |
-| `tests/` | Model, SHAP, SQL safety, memory contract and app functional checks |
-| `documents/` | Final presentation PDF with verified application screenshots and supporting documentation |
+| `train.py` | EDA, dataset splitting, baseline and candidate training, calibration, rules, and evaluation |
+| `src/data/preprocessor.py` | Reproducible feature engineering and separation of identifiers, inputs, and target |
+| `src/ml/predict.py` | Probability prediction, score and band calculation, input checks, and permutation SHAP |
+| `src/ml/rules.py` | Interpretable surrogate-rule generation |
+| `src/talk_to_data/` | Prompt template, short conversation memory, API client, and guarded SQL execution |
+| `bootstrap.py` | Converts the privately mounted CSV into SQLite and prepares held-out examples |
+| `app.py` | The six Streamlit sections |
+| `models/` | Saved final model, baseline, calibration objects, and rules |
+| `reports/` | Metrics, EDA findings, feature catalogue, plots, and rule output |
+| `tests/` | Model, SHAP, SQL-safety, memory, and UI tests |
+| `documents/` | Presentation PDF, data guide, deployment notes, and validation notes |
 
-## Data and EDA
+## Data understanding and EDA
 
-The supplied table contains 307,511 applications and 122 columns: 106 numeric and 16 categorical, including the target and identifier. There are 24,825 positive outcomes (8.07%). TARGET describes payment difficulties beyond an unspecified delay in early installments; it is not a universal legal definition of default. Amounts are shown in dataset units because the supplied schema does not establish a currency.
+The application table has 307,511 rows and 122 columns: 106 numerical and 16 categorical columns, including the identifier and target. There are 24,825 positive cases, which gives a positive rate of 8.07%. In the source data, `TARGET=1` means the applicant experienced payment difficulty after a delay in the early instalments. I therefore describe the outcome as *payment difficulty* rather than treating it as a universal legal definition of default. The source also does not specify a currency, so amounts are labelled as dataset units.
 
-EDA uses 261,384 development rows, excluding the final test set. `reports/eda.json` contains six quantified, non-causal comparisons, each with sample counts and a corresponding chart: income type, education, housing, contract type, age group and credit/income ratio. Rate rankings exclude groups with fewer than 500 applications. `reports/feature_catalog.json` covers every source column; `documents/DATA_GUIDE.md` explains business categories and coverage.
+EDA is based on 261,384 development rows, with the final test split kept separate. The six findings in `reports/eda.json` cover income type, education, housing, contract type, age, and credit-to-income ratio. Every finding includes the group size, observed rate, a comparison group, and a chart. Rankings ignore groups with fewer than 500 applicants to avoid highlighting very small segments.
 
-Several housing-description fields are mostly missing. DAYS_EMPLOYED=365243 is a sentinel, not a real employment duration. It becomes missing with an indicator. Numeric medians and encoders are learned only from model-training rows. Unknown categories are supported. Invalid denominators become missing rather than infinite. TARGET and SK_ID_CURR never enter model features.
+Some housing-related columns have very high missingness. Another important issue is `DAYS_EMPLOYED=365243`, which is a sentinel value rather than a genuine employment duration. The pipeline replaces it with missing data and adds an indicator. Numeric medians and categorical encoders are learned only from the training rows. Unknown categories are supported, invalid ratios become missing instead of infinite, and neither `TARGET` nor `SK_ID_CURR` is used as a model feature.
 
-Only `application_train.csv` and the dictionary were supplied. Bureau-query counts, external scores and social-circle indicators provide limited credit-related information. Detailed bureau history, prior applications and installment repayment behavior are **not** analyzed without the additional source tables; their absence is disclosed in the UI. Those are the highest-priority data extensions.
+Only the application table and column description were supplied for this build. As a result, the project does not claim to analyse detailed bureau history, previous applications, or instalment-level repayment behaviour. Adding those tables would be the most useful next data improvement.
 
-## Model design and measured results
+## Model approach and results
 
-The model uses 35 raw inputs plus deterministic features such as age, employment years, credit/income, annuity/income and mean external score. Histogram gradient boosting is a small CPU-friendly choice for nonlinear tabular data and native categorical splits. A class-balanced logistic regression provides a simpler comparison. Two boosting candidates, with and without class weights, are fitted. Each receives sigmoid calibration on separate calibration data. Validation average precision selects the balanced model.
+The model starts with 35 raw inputs and creates features such as age, employment duration, credit-to-income ratio, annuity-to-income ratio, and mean external score. I selected histogram gradient boosting because it is compact, works well on nonlinear tabular relationships, and remains practical on a CPU. A class-balanced logistic regression is included as a simpler baseline.
 
-| Split | Rows | Use |
+Two boosting candidates—with and without balanced class weights—were trained. Both were calibrated using sigmoid calibration on a separate calibration set. Validation average precision was used to select the balanced version.
+
+| Split | Rows | Purpose |
 |---|---:|---|
-| Training | 169,130 | Learned transforms and model fit |
-| Calibration | 46,127 | Probability calibration |
-| Validation | 46,127 | Candidate selection, threshold and bands |
-| Test | 46,127 | Final reported metrics |
+| Training | 169,130 | Fit preprocessing and models |
+| Calibration | 46,127 | Calibrate predicted probabilities |
+| Validation | 46,127 | Select the model, threshold, and bands |
+| Test | 46,127 | Report final performance |
 
-Stratified random splitting uses seeds 42, 43 and 44. Gradient boosting also uses internal early stopping within the training allocation. This is not temporal or external validation.
+The splits are stratified and use seeds 42, 43, and 44. Gradient boosting also uses early stopping within the training allocation. This is a random holdout design, not temporal or external validation.
 
-| Final test measure | Value |
+| Final test metric | Result |
 |---|---:|
 | ROC-AUC | 0.7616 |
-| Average precision (PR summary) | 0.2438 |
+| Average precision | 0.2438 |
 | Positive prevalence / no-skill AP | 0.0807 |
-| Precision at 0.08 | 0.1650 |
-| Recall at 0.08 | 0.7019 |
+| Precision at threshold 0.08 | 0.1650 |
+| Recall at threshold 0.08 | 0.7019 |
 | F1 | 0.2672 |
 | F2 | 0.4252 |
 | Brier score | 0.06777 |
 
-The test confusion matrix is TN=29,178, FP=13,225, FN=1,110, TP=2,614. Many flagged applications are false positives. The threshold maximizes validation F2, weighting recall more strongly, because no business loss function was supplied. It is a demonstration screening threshold, not a recommended lending cutoff. Uncalibrated test Brier was 0.19073; separate calibration materially improves probability accuracy. The logistic baseline's validation ROC-AUC/AP are 0.7475/0.2274, versus 0.7583/0.2420 for the selected model. Baseline threshold metrics and Brier are not calibration-matched comparisons.
+The final test confusion matrix is TN=29,178, FP=13,225, FN=1,110, and TP=2,614. The threshold was chosen by maximizing validation F2, giving recall more importance than precision because no business cost matrix was provided. This produces many false positives, so it should be viewed as an experimental screening threshold rather than a real lending cutoff.
 
-The **risk score is probability × 100**, with higher values meaning higher estimated difficulty risk. Validation quantiles define Low <5.1994%, Medium 5.1994%–<15.2470%, and High ≥15.2470%. These bands and the binary screening threshold serve different purposes. Bands are relative demonstration segments, not lender-approved policy.
+Calibration reduced the test Brier score from 0.19073 to 0.06777. On validation data, the logistic baseline achieved ROC-AUC 0.7475 and average precision 0.2274, while the selected model reached 0.7583 and 0.2420.
 
-## Explainability and rules
+The displayed risk score is simply the calibrated probability multiplied by 100. Validation quantiles produce three relative bands:
 
-Permutation SHAP explains the complete calibrated pipeline in probability units. It uses a median/mode reference summarized from 1,000 training rows; it does not embed raw training applicants in the model artifact. With a fixed seed and three permutation-budget cycles, the baseline plus all contributions is checked against the actual predicted probability. The UI displays the top ten contributions in percentage points. Correlated features can share attribution and masking may produce unrealistic combinations. These are approximate model explanations, not causal claims.
+- Low: below 5.1994%
+- Medium: 5.1994% to below 15.2470%
+- High: 15.2470% or above
 
-Native categorical tree conversions did not reproduce the calibrated prediction in an initial explainability check, so model-agnostic permutation SHAP was chosen. The reconstruction test protects against explaining a different mathematical model from the one serving predictions.
+These bands provide relative risk groupings. They are not approved credit policy and are separate from the binary screening threshold.
 
-A depth-three decision tree learns the final model's training-set bands using five interpretable features. Its validation agreement is **74.73%**. The tree is saved in the final bundle and its output is in `reports/rules.json`. Approximate readable examples (thresholds rounded):
+## Explainability and readable rules
 
-- Mean external score ≤0.34 and age ≤56.35 → the surrogate assigns High risk.
-- Mean external score between 0.34 and 0.53 → the surrogate assigns Medium risk.
-- Mean external score >0.53 → the surrogate assigns Low risk.
+Each prediction is explained using permutation SHAP on the complete calibrated pipeline. The explanation is measured in probability units and uses a median/mode reference created from 1,000 training rows. No raw training applicants are stored inside the model artifact. The implementation checks that the baseline plus the feature contributions reconstructs the actual predicted probability, then displays the ten largest contributions as percentage points.
 
-These examples summarize surrogate leaves; the exact fitted tree is authoritative. Missing values follow the saved rule imputer. The rules do not replace the full model and are not loan approval policy.
+I initially tested native categorical-tree conversions, but they did not reproduce the calibrated prediction closely enough. I therefore used model-agnostic permutation SHAP so the explanation matches the model that actually serves the prediction. These explanations remain approximate: correlated variables may share importance, and masked combinations are not always realistic. They explain the model's calculation, not the cause of a person's repayment difficulty.
 
-## LLM prompting, memory and hallucination controls
+For simpler business-readable rules, a depth-three decision tree learns to approximate the final model's Low, Medium, and High bands using five interpretable features. It agrees with the model bands on 74.73% of validation rows. Rounded examples include:
 
-`prompt_templates.py` supplies one schema-specific system prompt, the exact target meaning, available columns and SQL constraints. It defaults to development rows, avoiding accidental holdout exploration. Unsupported repayment-history questions should receive a clarification. Five explicit query patterns cover aggregate risk, income groups, positive-case loan amounts, age bands and occupation ranking with a minimum group size.
+- Mean external score at or below 0.34 and age at or below 56.35 → High
+- Mean external score between 0.34 and 0.53 → Medium
+- Mean external score above 0.53 → Low
 
-Only the latest three question/SQL pairs enter provider context; UI history retains ten turns and can be cleared. Questions are capped at 1,000 characters and output at 700 completion tokens. One generation call per question, local result rendering and schema-only context reduce token use. Provider-reported usage is displayed. There is a configurable in-process hourly request budget and a short UI cooldown; these are demo safeguards, not distributed production rate limiting.
+The complete fitted tree in `reports/rules.json` is authoritative. These rules are an approximation of the model, not a replacement for it or a loan-approval policy.
 
-The SQL validator accepts one SELECT on one allowed table, known columns and approved aggregate/numeric functions; it rejects joins, nested queries, CTEs, mutations, system tables and unbounded wildcard selection. Result limits cannot exceed 100. SQLite adds a 2-second execution budget and independent authorization. SQL and result rows are visible for audit. Syntax validation cannot prove that a semantically valid SQL query answers the user's intended question, so live question-by-question checks remain necessary.
+## Talk to Data design
 
-The provider receives schema, user question and bounded history, not applicant result rows. It is still the user's responsibility not to type private information into a question. Provider errors are reported explicitly; there is no canned-response substitute presented as live AI.
+The chatbot prompt defines the available schema, the exact meaning of the target, permitted columns, and SQL restrictions. Descriptive questions default to development rows so the test set is not casually explored. Questions requiring unavailable repayment or bureau history should return a clarification rather than fabricated SQL.
 
-## Reproduce and test without Docker
+Five reference patterns are included: overall difficulty rate, rate by income type, average credit among positive cases, rate by age decade, and highest-rate occupations with a minimum group size.
 
-Use Python 3.12 in a virtual environment, then:
+To keep the prompt small, only the latest three question-and-SQL pairs are sent back to the provider. The interface retains ten turns and lets the user clear them. Questions are limited to 1,000 characters, responses to 700 completion tokens, and each question uses one generation call. Provider token usage is shown in the interface.
+
+The validator allows one `SELECT` statement against the approved `applicants` table. It checks table and column names, restricts functions, and rejects joins, CTEs, nested queries, mutations, system tables, offsets, and unrestricted wildcard output. Results are capped at 100 rows, and SQLite independently applies read-only access and a two-second execution limit. The proposed SQL and returned rows stay visible so the answer can be audited.
+
+These safeguards stop many unsafe or unsupported requests, but syntactically valid SQL can still misunderstand a question. That is why the five live evaluation questions are checked individually rather than claiming perfect reliability.
+
+## Running and testing without Docker
+
+With Python 3.12 and a virtual environment:
 
 ```sh
 python -m pip install -r requirements.txt
@@ -123,34 +150,47 @@ python bootstrap.py
 python -m streamlit run app.py
 ```
 
-With data mounted, run:
+After mounting the data, run the tests with:
 
 ```sh
 python -m unittest discover -s tests -v
+```
+
+To retrain the models and regenerate reports:
+
+```sh
 python train.py --data data/application_train.csv
 ```
 
-The second command retrains and overwrites generated reports/models. Restart the app after retraining to clear its resource cache. To check real AI calls after configuring `.env`, run:
+Retraining overwrites the saved model and report files, so the application should be restarted afterward to clear cached resources.
+
+After configuring the LLM environment variables, the live chatbot evaluation can be run with:
 
 ```sh
 python evaluate_live_chat.py
 ```
 
-This deliberately makes five billable API calls and records returned SQL, rows and comparison results in `reports/live_chat_evaluation.json`. Run it only when ready to evaluate your configured provider. Offline mocked API tests establish the request contract and memory behavior; they do not establish live model reliability.
+This command makes five real API calls and saves their SQL, returned rows, and comparison results in `reports/live_chat_evaluation.json`. The API calls may be billable depending on the provider.
 
-## Public deployment
+## Deployment
 
-The updated submission instruction requires a deployed project URL as well as Docker and Compose files. A localhost address is not that URL. See `documents/DEPLOYMENT.md` for container requirements and checks. Keep raw data and secrets out of Git/ZIP; provision the CSV privately on the host. This Python/SQLite/SHAP app needs a host that runs Docker containers with writable disk, enough RAM and WebSocket support. A static site host is insufficient.
+The repository includes both `Dockerfile` and `docker-compose.yml`. An evaluator can provide the dataset and private environment variables, then start the application with one command:
 
-## Limits and next improvements
+```sh
+docker compose up --build
+```
 
-- Application-only scope; add and aggregate bureau, balance and installment tables with leakage-aware joins before claiming credit-history/repayment coverage.
-- Small candidate search; no confidence intervals, temporal holdout, external validation, fairness assessment or drift monitoring yet.
-- Sparse manual inputs rely heavily on imputation; the UI warns about incomplete scenarios.
-- Age and other applicant attributes can produce fairness issues; excluding a single sensitive column does not establish fairness.
-- SQLite and in-process budgets suit a demonstration; production needs authenticated roles, centralized budgets, audit retention and operational monitoring.
-- Saved joblib files must come from trusted sources. Artifacts are tied to the recorded library versions.
-- Live LLM, real Docker startup and public hosting are explicit remaining verification gates.
+The public application is hosted on Render:
 
-## Live Demo
 https://credit-risk-intelligence-platform-1.onrender.com
+
+The raw CSV and API secrets are intentionally excluded from Git and the submission ZIP. A production deployment would mount the data privately on a container host with writable storage, sufficient memory, and WebSocket support. A static-site service would not be suitable for this application.
+
+## Current limitations and next steps
+
+- The current model uses application data only. Bureau, balance, previous-application, and instalment tables would need leakage-aware aggregation before they could be added.
+- The model search is intentionally small, and the model has not yet been tested with confidence intervals, temporal validation, external validation, fairness evaluation, or drift monitoring.
+- Manual scenarios with many missing inputs depend strongly on imputation; the interface warns the user when this happens.
+- Applicant attributes may introduce fairness concerns. Removing one sensitive field would not be enough to establish fairness.
+- SQLite and in-process usage limits are suitable for this project. A production system would need authentication, centralized rate limits, audit retention, monitoring, and controlled data access.
+- Saved `joblib` files should only be loaded from a trusted source and with compatible package versions.

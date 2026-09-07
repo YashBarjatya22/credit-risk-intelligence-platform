@@ -131,7 +131,7 @@
     0.15247015123313182
   ],
   "threshold_rationale": "Maximize F2 on validation; recall weighted more than precision. No business cost model supplied.",
-  "bands_rationale": "Validation probability quantiles: bottom 50% Low, next 35% Medium, top 15% High. Relative demo segments, not policy.",
+  "bands_rationale": "Validation probability quantiles: bottom 50% Low, next 35% Medium, top 15% High. Relative risk segments, not policy.",
   "training_seconds": 36.15408754348755,
   "python": "3.12.13",
   "sklearn": "1.8.0",

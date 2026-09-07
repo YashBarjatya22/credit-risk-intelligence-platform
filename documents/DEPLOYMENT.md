@@ -1,24 +1,38 @@
+# Deployment
 
+**Live application:** https://credit-risk-intelligence-platform-1.onrender.com
 
-## Host requirements
+CreditScope runs as a Docker web service on Render. The service listens on the host-provided `PORT` value, with port 8501 used locally. Streamlit's health endpoint is `/_stcore/health`, and the container runs as the non-root user `appuser` (uid 10001).
 
+## Run locally with Docker Compose
 
-Build from the included Dockerfile. Route the host's public HTTPS service to port 8501, or set `PORT` to the port required by the host. Health endpoint: `/_stcore/health`. Startup may take longer than a normal static app because CSV conversion occurs first. The container runs as uid 10001; its runtime directory must remain writable.
+1. Place `application_train.csv` at `data/application_train.csv`.
+2. Copy `.env.example` to `.env` and add the optional LLM settings if Talk to Data is required.
+3. From the project root, run:
+
+```sh
+docker compose up --build
+```
+
+4. Open `http://localhost:8501`.
+5. Check container health with `docker compose ps`. Stop the service with `docker compose down`.
+
+The startup command runs `bootstrap.py` before Streamlit. When the CSV is available, the script creates a local read-only analytics database and held-out profiles. Saved model and report views remain available when the CSV is not mounted.
 
 ## Data and secrets
 
-- Transfer `application_train.csv` through the host's private file or volume mechanism and mount it read-only at `/app/data/application_train.csv`, or set `DATA_PATH` to its private absolute path. Never commit it to Git.
-- Set `LLM_API_KEY`, `LLM_MODEL`, and `LLM_BASE_URL` in the host's secret settings. Do not bake them into an image or commit `.env`.
-- Optionally set `APP_ACCESS_PASSWORD` and give the evaluator access privately through the submission process. This lightweight gate is for a demonstration, not full production authentication.
-- Do not publish raw data or a runtime SQLite database in Git. Only the code, reports and trusted model artifacts belong in the submitted source archive.
+- The raw Home Credit CSV is intentionally excluded from Git. Mount it read-only at `/app/data/application_train.csv`, or set `DATA_PATH` to its private location.
+- Store `LLM_API_KEY`, `LLM_MODEL`, and `LLM_BASE_URL` in the hosting provider's environment settings.
+- `APP_ACCESS_PASSWORD` can be set when a lightweight access gate is useful.
+- Do not commit `.env`, the runtime SQLite database, raw applicant data, or API credentials.
 
-## Acceptance checks
+The current public free service does not include the private CSV. It therefore serves the saved dashboards and manual risk-assessment workflow, while held-out profiles and database-backed questions require a deployment with the dataset mounted.
 
-1. Public HTTPS URL opens from a fresh browser session and remains reachable after restart.
-2. Every UI section opens. Assess a held-out profile and confirm probability, band and explanation appear.
-3. Five SQL examples execute. Five real natural-language questions pass the live evaluation script and are manually inspected for semantic correctness.
-4. A follow-up question preserves the intended context. Requests for unavailable installment histories get a clarification rather than invented results.
-5. A destructive SQL request is refused, API failures are readable, and no secret is displayed in logs or screenshots.
-6. Capture the deployed app outputs in the presentation and record the URL in the final form.
+## Deployment checks
 
-Host-specific account creation, billing and secret entry must happen in the user's own account. A permission message alone does not give this chat access to that account or to Antigravity on the laptop.
+- The public HTTPS URL opens successfully after a cold start.
+- All six application sections render.
+- A manual scenario returns a probability, relative risk band, and SHAP explanation.
+- With the private CSV mounted, the five reference SQL examples execute against the read-only database.
+- With LLM settings configured, `evaluate_live_chat.py` checks the five reference questions.
+- Unsafe SQL is rejected, provider errors are readable, and no secret appears in logs or screenshots.

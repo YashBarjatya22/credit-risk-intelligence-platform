@@ -108,7 +108,7 @@ def main():
       test_uncalibrated_brier=float(brier_score_loss(y.iloc[test],rawtest)),
       test_prevalence=float(y.iloc[test].mean()),risk_boundaries=boundaries,
       threshold_rationale='Maximize F2 on validation; recall weighted more than precision. No business cost model supplied.',
-      bands_rationale='Validation probability quantiles: bottom 50% Low, next 35% Medium, top 15% High. Relative demo segments, not policy.',
+      bands_rationale='Validation probability quantiles: bottom 50% Low, next 35% Medium, top 15% High. Relative risk segments, not policy.',
       training_seconds=time.time()-start,python=platform.python_version(),sklearn=sklearn.__version__,
       dataset_sha256=hashlib.sha256(Path(args.data).read_bytes()).hexdigest())
     save_json(ROOT/'reports/metrics.json',result)

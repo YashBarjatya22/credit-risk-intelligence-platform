@@ -1,4 +1,4 @@
-"""Defense in depth: AST allowlist + SQLite read-only URI + authorizer + limits."""
+"""Validate and execute read-only analytics queries with layered safeguards."""
 import sqlite3, time
 from pathlib import Path
 import sqlglot

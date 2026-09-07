@@ -1,4 +1,4 @@
-"""Five real provider calls. Run explicitly after private API configuration."""
+"""Evaluate the five reference questions against the configured LLM provider."""
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent
 def main():
     load_dotenv(ROOT / '.env')
     if not configured():
-        raise SystemExit('Configure LLM_API_KEY and LLM_MODEL privately before evaluation.')
+        raise SystemExit('Set LLM_API_KEY and LLM_MODEL before running this evaluation.')
     db = ROOT / 'runtime/analytics.db'
     if not db.exists():
         raise SystemExit('Run bootstrap.py with the dataset first.')

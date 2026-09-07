@@ -36,7 +36,7 @@ class SQLSafety(unittest.TestCase):
     def test_limit_preserved_and_capped(self):
         self.assertTrue(validate_sql('SELECT income FROM applicants LIMIT 10').endswith('LIMIT 10'))
         self.assertTrue(validate_sql('SELECT income FROM applicants LIMIT 100000').endswith('LIMIT 100'))
-    def test_missing_key_is_not_fake_ai(self):
+    def test_missing_llm_configuration_fails_explicitly(self):
         with patch.dict(os.environ,{'LLM_API_KEY':'','LLM_MODEL':''}):
             with self.assertRaises(ValueError):ask('What is the default rate?',[],ROOT/'runtime/analytics.db')
     def test_followup_memory_contract_mock(self):

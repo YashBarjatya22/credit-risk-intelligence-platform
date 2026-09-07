@@ -1,4 +1,4 @@
-"""Real Chat Completions API integration. Never replaces missing API access with fake AI."""
+"""OpenAI-compatible Chat Completions client for natural-language-to-SQL queries."""
 import json, os, threading, time
 from urllib.request import Request,urlopen
 from urllib.error import HTTPError,URLError
@@ -37,7 +37,7 @@ def complete(messages):
         except (URLError,TimeoutError) as e:
             if attempt<2:
                 time.sleep(2**attempt);continue
-            raise ValueError('LLM service could not be reached. No AI answer was generated.') from e
+            raise ValueError('The LLM service could not be reached. No response was returned.') from e
     try:
         choice=payload['choices'][0]
         if choice.get('finish_reason')!='stop':raise ValueError('Incomplete LLM response. Try a shorter question.')
